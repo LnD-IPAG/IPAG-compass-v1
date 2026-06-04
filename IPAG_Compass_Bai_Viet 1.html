@@ -1,0 +1,1303 @@
+<html lang="vi"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPAG Compass — Bốn La Bàn Sự Nghiệp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:     #0D1F3C;
+    --navy-mid: #122444;
+    --teal:     #0891B2;
+    --teal-lt:  #E0F2F7;
+    --mint:     #06B6D4;
+    --gold:     #F59E0B;
+    --gold-lt:  #FEF3C7;
+    --purple:   #7C3AED;
+    --purple-lt:#EDE9FE;
+    --green:    #059669;
+    --green-lt: #D1FAE5;
+    --amber:    #D97706;
+    --amber-lt: #FEF3C7;
+    --slate:    #64748B;
+    --slate-lt: #F1F5F9;
+    --white:    #FFFFFF;
+    --text:     #1E293B;
+    --muted:    #64748B;
+    --border:   #E2E8F0;
+    --bg:       #F8FAFC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    z-index: 9999; transition: width 0.1s;
+    width: 0%;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 220px;
+    background: var(--navy);
+    padding: 28px 0;
+    display: flex; flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+  .sidebar-logo .brand { font-size: 13px; font-weight: 800; color: var(--mint); letter-spacing: 2px; text-transform: uppercase; }
+  .sidebar-logo .sub   { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .nav-item {
+    display: block; padding: 8px 20px;
+    font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.5);
+    text-decoration: none; cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .nav-item:hover  { color: #fff; border-left-color: var(--teal); background: rgba(255,255,255,0.04); }
+  .nav-item.active { color: var(--mint); border-left-color: var(--mint); background: rgba(6,182,212,0.08); }
+  .nav-section { padding: 16px 20px 6px; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.25); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 220px;
+    max-width: 820px;
+    padding: 0 48px 120px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    margin: 0 -48px 64px;
+    padding: 80px 48px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; right: -60px; top: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(8,145,178,0.18) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: 60px; bottom: -80px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+  }
+  .hero-tag { font-size: 11px; font-weight: 700; color: var(--mint); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800; color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--mint); }
+  .hero-desc { font-size: 17px; color: rgba(255,255,255,0.65); max-width: 560px; line-height: 1.7; margin-bottom: 36px; }
+  .compass-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .compass-pill {
+    padding: 7px 18px; border-radius: 100px;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .pill-d { background: rgba(8,145,178,0.2); color: #67E8F9; border: 1px solid rgba(8,145,178,0.35); }
+  .pill-c { background: rgba(124,58,237,0.2); color: #C4B5FD; border: 1px solid rgba(124,58,237,0.35); }
+  .pill-s { background: rgba(5,150,105,0.2); color: #6EE7B7; border: 1px solid rgba(5,150,105,0.35); }
+  .pill-p { background: rgba(217,119,6,0.2); color: #FCD34D; border: 1px solid rgba(217,119,6,0.35); }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 72px; }
+  .section-header { margin-bottom: 32px; }
+  .section-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700; color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-lead { font-size: 16px; color: var(--muted); margin-top: 10px; line-height: 1.7; }
+
+  /* ── PROSE ── */
+  .prose p { margin-bottom: 18px; color: var(--text); font-size: 15.5px; line-height: 1.8; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-lt);
+    padding: 18px 22px; border-radius: 0 8px 8px 0;
+    margin: 28px 0;
+    font-size: 15px; line-height: 1.75;
+  }
+  .highlight.gold { border-color: var(--gold); background: var(--gold-lt); }
+  .highlight.purple { border-color: var(--purple); background: var(--purple-lt); }
+  .highlight.green { border-color: var(--green); background: var(--green-lt); }
+  .highlight.navy { border-left-color: var(--navy); background: #EEF2FF; }
+  .highlight strong { color: var(--navy); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--navy); color: #fff;
+    border-radius: 12px; padding: 24px 28px;
+    margin: 28px 0; position: relative; overflow: hidden;
+  }
+  .callout::before {
+    content: ''; position: absolute; right: -20px; top: -20px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(8,145,178,0.12);
+  }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--mint); text-transform: uppercase; margin-bottom: 10px; }
+  .callout p { font-size: 15px; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.7; }
+  .callout strong { color: var(--mint); }
+
+  /* ── SELF-QUESTION ── */
+  .self-q {
+    background: var(--gold-lt); border: 1px solid #FCD34D;
+    border-radius: 10px; padding: 20px 24px; margin: 24px 0;
+  }
+  .self-q-label { font-size: 11px; font-weight: 700; color: #92400E; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .self-q ul { list-style: none; padding: 0; }
+  .self-q ul li { font-size: 14.5px; color: #78350F; padding: 5px 0 5px 20px; position: relative; line-height: 1.6; }
+  .self-q ul li::before { content: '→'; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+
+  /* ── COMPARE TABLE ── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 12px; overflow: hidden; margin: 28px 0; border: 1px solid var(--border); }
+  .compare-col-hd {
+    padding: 14px 20px; font-size: 12px; font-weight: 700; text-align: center;
+  }
+  .compare-col-hd.normal { background: #F1F5F9; color: var(--slate); }
+  .compare-col-hd.ipag   { background: var(--teal); color: #fff; }
+  .compare-row { display: contents; }
+  .compare-cell {
+    padding: 14px 20px; font-size: 14px; line-height: 1.6;
+    border-top: 1px solid var(--border);
+  }
+  .compare-cell.normal { background: #fff; color: var(--muted); }
+  .compare-cell.ipag   { background: #F0FAFB; color: var(--navy); font-weight: 500; }
+
+  /* ── PILLAR CARDS ── */
+  .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .pillar-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pillar-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .pillar-card-top { padding: 16px 18px; }
+  .pillar-card-code { font-size: 22px; font-weight: 800; margin-bottom: 2px; }
+  .pillar-card-name { font-size: 13px; font-weight: 600; }
+  .pillar-card-body { padding: 14px 18px; background: #fff; font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .pillar-card-q { font-size: 13px; font-style: italic; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+  /* ── EPIC GRID ── */
+  .epic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+  .epic-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .epic-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .epic-card-hd { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .epic-letter { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .epic-card-hd-text .name { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .epic-card-hd-text .sub  { font-size: 11px; color: var(--muted); }
+  .epic-card-body { padding: 12px 16px; font-size: 13.5px; color: var(--muted); line-height: 1.65; border-top: 1px solid var(--border); }
+
+  /* ── DEPTH TABLE ── */
+  .depth-table { width: 100%; border-collapse: collapse; margin: 24px 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .depth-table thead tr { background: var(--navy); }
+  .depth-table thead th { padding: 12px 14px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); text-align: left; }
+  .depth-table tbody tr:nth-child(odd)  { background: #F8FAFC; }
+  .depth-table tbody tr:nth-child(even) { background: #fff; }
+  .depth-table tbody tr:hover { background: var(--teal-lt); }
+  .depth-table td { padding: 12px 14px; font-size: 14px; color: var(--text); vertical-align: top; border-top: 1px solid var(--border); }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 12px; font-weight: 700; }
+  .badge-teal   { background: var(--teal-lt); color: var(--teal); }
+  .badge-navy   { background: #EEF2FF; color: var(--navy); }
+  .badge-red    { background: #FEE2E2; color: #991B1B; }
+
+  /* ── D-RANK STEPS ── */
+  .rank-steps { display: flex; gap: 0; margin: 24px 0; border-radius: 10px; overflow: hidden; }
+  .rank-step { flex: 1; padding: 14px 10px; text-align: center; }
+  .rank-step .num { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .rank-step .lbl { font-size: 11px; line-height: 1.4; }
+
+  /* ── SCOPE ZONES ── */
+  .scope-stack { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+  .scope-row {
+    display: flex; align-items: stretch;
+    border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+  }
+  .scope-tag {
+    width: 64px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #fff;
+  }
+  .scope-label-col { padding: 12px 16px; min-width: 110px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
+  .scope-label-col .scope-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .scope-label-col .scope-sub  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .scope-desc { padding: 12px 16px; font-size: 13.5px; color: var(--muted); display: flex; align-items: center; line-height: 1.55; }
+
+  /* ── FC/OC CARDS ── */
+  .flow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+  .flow-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .flow-card-hd { padding: 14px 18px; font-size: 13px; font-weight: 700; }
+  .flow-card-body { padding: 14px 18px; }
+  .flow-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .flow-text .ftitle { font-size: 13.5px; font-weight: 700; color: var(--navy); }
+  .flow-text .fdesc  { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+  /* ── HWG TOWER ── */
+  .hwg-tower { display: flex; flex-direction: column; gap: 0; margin: 24px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .hwg-row { display: grid; grid-template-columns: 56px 1fr auto; }
+  .hwg-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; }
+  .hwg-content { padding: 18px 20px; }
+  .hwg-content .htitle { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .hwg-content .hq { font-size: 12.5px; font-style: italic; color: var(--muted); margin-bottom: 8px; }
+  .hwg-content .hdesc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .hwg-metric { padding: 18px 16px; display: flex; align-items: center; border-left: 1px solid var(--border); }
+  .hwg-metric span { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 6px; text-align: center; line-height: 1.5; }
+
+  /* ── COMPASS LOOP ── */
+  .loop-steps { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+  .loop-step { display: flex; gap: 16px; padding: 18px 0; position: relative; }
+  .loop-step:not(:last-child) { border-bottom: 1px solid var(--border); }
+  .loop-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: #fff; flex-shrink: 0; margin-top: 2px;
+  }
+  .loop-body { flex: 1; }
+  .loop-body .ltitle { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .loop-body .lq { font-size: 14px; font-style: italic; color: var(--muted); margin-bottom: 8px; }
+  .loop-body .ldesc { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .loop-gate { margin-top: 8px; display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+
+  /* ── COMPANION MAP ── */
+  .companion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .companion-group { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .companion-group-hd { padding: 12px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .companion-item { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); align-items: flex-start; }
+  .companion-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 2px; }
+  .companion-text .ctitle { font-size: 13.5px; font-weight: 600; color: var(--navy); }
+  .companion-text .cdesc  { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+  /* ── CODE OF CONDUCT ── */
+  .coc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0; }
+  .coc-item {
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+    transition: box-shadow 0.2s;
+  }
+  .coc-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+  .coc-num { font-size: 11px; font-weight: 800; color: var(--teal); flex-shrink: 0; padding-top: 2px; min-width: 20px; }
+  .coc-txt { font-size: 13px; color: var(--text); line-height: 1.5; font-weight: 500; }
+  .coc-group-tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; grid-column: 1 / -1; padding-top: 8px; }
+
+  /* ── BMI/ICM BOX ── */
+  .bmi-box { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .bmi-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .bmi-hd { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .bmi-hd-left .btitle { font-size: 16px; font-weight: 800; color: var(--navy); }
+  .bmi-hd-left .bsub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .bmi-hd-tag { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 100px; }
+  .bmi-body { padding: 14px 18px; border-top: 1px solid var(--border); }
+  .bmi-formula { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; padding: 8px 12px; background: var(--slate-lt); border-radius: 6px; }
+  .bmi-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .bmi-item:last-child { border-bottom: none; }
+  .bmi-item .bikey   { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .bmi-item .biname  { font-size: 12px; color: var(--teal); margin-bottom: 3px; }
+  .bmi-item .bidesc  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 56px 0; }
+
+  /* ── LA BAN HEADER ── */
+  .laban-header {
+    border-radius: 16px; overflow: hidden; margin-bottom: 32px;
+    display: grid; grid-template-columns: auto 1fr;
+  }
+  .laban-color-bar { width: 8px; }
+  .laban-hd-body { padding: 24px 28px; }
+  .laban-hd-tag  { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .laban-hd-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1.15; margin-bottom: 8px; }
+  .laban-hd-q { font-size: 15px; font-style: italic; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  .footer { margin: 80px -48px 0; background: var(--navy); padding: 40px 48px; color: rgba(255,255,255,0.45); font-size: 13px; text-align: center; }
+  .footer strong { color: var(--mint); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 0 24px 80px; }
+    .hero { margin: 0 -24px 48px; padding: 56px 24px 48px; }
+    .pillar-grid, .epic-grid, .flow-grid, .companion-grid, .bmi-box { grid-template-columns: 1fr; }
+    .compare { grid-template-columns: 1fr; }
+    .compare-col-hd.normal { display: none; }
+    .compare-cell.normal   { display: none; }
+    .coc-grid { grid-template-columns: 1fr 1fr; }
+    .rank-steps { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar" style="width: 47.2618%;"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">IPAG COMPASS</div>
+    <div class="sub">Bốn La Bàn Sự Nghiệp</div>
+  </div>
+  <div class="nav-section">Mở đầu</div>
+  <a class="nav-item" href="#intro">Tại sao IPAG khác biệt?</a>
+  <a class="nav-item" href="#epic-section">Nền — EPIC &amp; ETC</a>
+  <a class="nav-item" href="#tam-bao">Tam Bảo nuôi dưỡng</a>
+  <div class="nav-section">4 La Bàn</div>
+  <a class="nav-item" href="#overview">Tổng quan 4 La Bàn</a>
+  <a class="nav-item active" href="#dgo">🔵 dGO · Thấy đúng</a>
+  <a class="nav-item" href="#dlink">🟣 dLINK · Thông đúng</a>
+  <a class="nav-item" href="#dwork">🟢 dWORK · Cộng đúng</a>
+  <a class="nav-item" href="#dvalue">🟠 dVALUE · Kết quả đúng</a>
+  <div class="nav-section">Vận hành</div>
+  <a class="nav-item" href="#loop">Vòng lặp 4 La Bàn</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag"></div>
+    <h1>IPAG <span>Compass</span><br>Bốn La Bàn Sự Nghiệp</h1>
+    <p class="hero-desc">Bộ tài liệu này giúp bạn hiểu rõ IPAG vận hành theo triết lý nào, bạn đang đứng ở đâu trong tổ chức, và cần làm gì để trưởng thành một cách thật sự — không chỉ đạt KPI trên giấy.</p>
+    <div class="compass-pills">
+      <span class="compass-pill pill-d">D · dGO — Thấy đúng</span>
+      <span class="compass-pill pill-c">C · dLINK — Thông đúng</span>
+      <span class="compass-pill pill-s">S · dWORK — Cộng đúng</span>
+      <span class="compass-pill pill-p">P · dVALUE — Kết quả đúng</span>
+    </div>
+  </div>
+
+
+  <!-- PHẦN 1: NGUYÊN LÝ NỀN TẢNG -->
+  <section id="intro" class="fade-in visible">
+    <div class="section-header">
+      <div class="section-tag">Phần 1 · Nguyên lý nền tảng</div>
+      <h2 class="section-title">Tại sao IPAG hoạt động khác?</h2>
+      <p class="section-lead">Trước khi tìm hiểu về 4 La Bàn, bạn cần hiểu IPAG được xây dựng trên một triết lý khác biệt — và điều đó ảnh hưởng trực tiếp đến cách bạn làm việc mỗi ngày.</p>
+    </div>
+
+    <div class="prose">
+      <p>Hầu hết các tổ chức vận hành theo mô hình quen thuộc: có vấn đề thì sửa quy trình, nhân viên không đạt KPI thì thay người, mục tiêu đặt ra là các con số đo được. Trong mô hình đó, <strong>con người là công cụ để đạt mục tiêu.</strong></p>
+      <p>IPAG không xây dựng theo cách đó. IPAG là một <strong>Human Institution</strong> — tổ chức đặt con người làm mục đích, không phải phương tiện. Kết quả kinh doanh không phải là đích đến, mà là <em>hệ quả tự nhiên</em> của việc con người trưởng thành thật sự.</p>
+    </div>
+
+    <div class="compare">
+      <div class="compare-col-hd normal">🏢 Nơi làm việc thông thường</div>
+      <div class="compare-col-hd ipag">🌱 IPAG — Human Organization</div>
+      <div class="compare-row">
+        <div class="compare-cell normal">Khi có vấn đề → thay quy trình hoặc thay người</div>
+        <div class="compare-cell ipag">Khi có vấn đề → tổ chức tự nhìn ra và tự điều chỉnh</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell normal">Phát triển = đi training, học thêm kỹ năng</div>
+        <div class="compare-cell ipag">Phát triển = trưởng thành thật qua trải nghiệm thực tế</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell normal">Thành công = KPI xanh, doanh số đạt</div>
+        <div class="compare-cell ipag">Thành công = người trưởng thành, tổ chức mạnh → KPI tự đến</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell normal">Con người là công cụ để đạt mục tiêu</div>
+        <div class="compare-cell ipag">Con người là mục đích — kết quả là hệ quả tự nhiên</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>💡 Ví dụ thực tế:</strong> Bạn gặp khó khăn trong công việc → thay vì chờ sếp giải quyết, bạn tự nhận ra vấn đề, trao đổi với đồng nghiệp, tìm cách cải thiện. Đó chính là tinh thần IPAG muốn xây dựng.
+    </div>
+
+    <div class="prose">
+      <p>Sự khác biệt này không chỉ nằm ở triết lý. Nó ảnh hưởng trực tiếp đến cách IPAG đánh giá, phát triển và ghi nhận mỗi người — thông qua hai chỉ số song hành: <strong>BMI</strong> và <strong>KPI</strong>.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Khái niệm cốt lõi</div>
+      <p>
+        <strong>BMI</strong> (Behavioral Maturity Indicator) = mức độ trưởng thành về hành vi và tư duy của bạn.<br><br>
+        <strong>KPI</strong> (Key Performance Indicator) = kết quả đầu ra đo được.<br><br>
+        IPAG tin rằng: <strong>người trưởng thành → kết quả tốt là tự nhiên.</strong> Ngược lại thì không đúng — bạn có thể đạt KPI trong ngắn hạn mà vẫn đang kiệt sức, không thật, không bền.
+      </p>
+    </div>
+
+    <div style="display:flex; gap: 16px; margin: 24px 0;">
+      <div style="flex:1; background: #EEF2FF; border-radius: 10px; padding: 20px 22px; text-align:center;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">BMI</div>
+        <div style="font-size: 22px; font-weight: 800; color: var(--teal); margin-bottom: 6px;">Điều kiện CẦN</div>
+        <div style="font-size: 13px; color: var(--muted);">Nền tảng để tất cả những thứ khác có thể xảy ra</div>
+      </div>
+      <div style="flex:1; background: #F0FDF4; border-radius: 10px; padding: 20px 22px; text-align:center;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">KPI</div>
+        <div style="font-size: 22px; font-weight: 800; color: var(--green); margin-bottom: 6px;">Điều kiện ĐỦ</div>
+        <div style="font-size: 13px; color: var(--muted);">Hệ quả tự nhiên khi BMI đã đủ chín</div>
+      </div>
+    </div>
+
+    <div class="self-q">
+      <div class="self-q-label">✏ Bạn tự hỏi</div>
+      <ul>
+        <li>Bạn đã từng làm việc ở đâu mà KPI cao nhưng cảm thấy kiệt sức hoặc không thật?</li>
+        <li>Ngược lại — khi nào bạn cảm thấy công việc thật sự có ý nghĩa?</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TAM BẢO -->
+  <section id="tam-bao" class="fade-in visible">
+    <div class="section-header">
+      <div class="section-tag">Môi trường nuôi dưỡng</div>
+      <h2 class="section-title">Tam Bảo — Ba nguồn nuôi dưỡng bạn tại IPAG</h2>
+      <p class="section-lead">Để trưởng thành thật sự, bạn cần một môi trường đúng. IPAG xây dựng môi trường đó xoay quanh ba nguồn lực mà người xưa gọi là Tam Bảo.</p>
+    </div>
+
+    <div class="prose">
+      <p>Không ai trưởng thành trong môi trường cô lập. Mọi thành công bền vững đều bắt đầu bằng trí tuệ — và trí tuệ là khả năng đi từ: <strong>Biết → Tin → Làm → Làm được → Lan tỏa.</strong></p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 28px 0;">
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--navy); padding: 16px 18px;">
+          <div style="font-size: 22px; margin-bottom: 4px;">🎓</div>
+          <div style="font-size: 14px; font-weight: 700; color: #fff;">THẦY GIỎI</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;">Wisdom to Success</div>
+        </div>
+        <div style="padding: 14px 18px;">
+          <p style="font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 10px;">Trí tuệ và phương pháp từ những người đi trước — giúp bạn rút ngắn hành trình mà không phải mò mẫm một mình.</p>
+          <div style="font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: 1px;">Nuôi dưỡng → DEPTH</div>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--teal); padding: 16px 18px;">
+          <div style="font-size: 22px; margin-bottom: 4px;">📚</div>
+          <div style="font-size: 14px; font-weight: 700; color: #fff;">SÁCH HAY</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">IPAG Way &amp; Methods</div>
+        </div>
+        <div style="padding: 14px 18px;">
+          <p style="font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 10px;">Phương pháp làm việc, khung tư duy, tài liệu, quy trình — những "con đường" được đúc kết để bạn không phải mò mẫm một mình.</p>
+          <div style="font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: 1px;">Nuôi dưỡng → 4 La Bàn</div>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--green); padding: 16px 18px;">
+          <div style="font-size: 22px; margin-bottom: 4px;">🤝</div>
+          <div style="font-size: 14px; font-weight: 700; color: #fff;">BẠN TỐT</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">COE — Community</div>
+        </div>
+        <div style="padding: 14px 18px;">
+          <p style="font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 10px;">Cộng đồng đồng nghiệp cùng nghề, cùng lĩnh vực — những người đi cùng bạn, cùng học cùng phát triển.</p>
+          <div style="font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: 1px;">Nuôi dưỡng → Trust &amp; ETC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight navy">
+      <strong>🔑 Nhớ kỹ:</strong> Ba nguồn này nuôi nhau. Thầy giỏi truyền trí tuệ, sách hay tạo khuôn mẫu hành động, bạn tốt tạo niềm tin. Không có môi trường bảo vệ và nuôi dưỡng, mọi thứ bên dưới đều lung lay.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EPIC -->
+  <section id="epic-section" class="fade-in visible">
+    <div class="section-header">
+      <div class="section-tag">Nền tảng giá trị</div>
+      <h2 class="section-title">EPIC — Bốn giá trị bạn sống mỗi ngày</h2>
+      <p class="section-lead">EPIC không phải là slogan trên tường. Đây là bộ giá trị bạn thể hiện qua từng quyết định, từng cuộc trò chuyện, từng cách xử lý công việc.</p>
+    </div>
+
+    <div class="prose">
+      <p>EPIC viết tắt của <strong>Empowering People to create Impact through Collaboration and Innovation.</strong> Bốn chữ cái, bốn giá trị sống — và mỗi giá trị có một ý nghĩa rất cụ thể trong công việc hằng ngày.</p>
+    </div>
+
+    <div class="epic-grid">
+      <div class="epic-card">
+        <div class="epic-card-hd">
+          <div class="epic-letter" style="background: var(--teal);">E</div>
+          <div class="epic-card-hd-text">
+            <div class="name">Empowering — Trao quyền &amp; nâng đỡ</div>
+            <div class="sub">Tin vào con người</div>
+          </div>
+        </div>
+        <div class="epic-card-body">Trao quyền tự chủ cho người khác — không kiểm soát từng bước nhỏ. Đặt niềm tin vào con người thay vì giữ chặt quyền lực. Nâng đỡ để người khác có thể tự đứng vững.</div>
+      </div>
+      <div class="epic-card">
+        <div class="epic-card-hd">
+          <div class="epic-letter" style="background: var(--purple);">P</div>
+          <div class="epic-card-hd-text">
+            <div class="name">People — Con người là gốc</div>
+            <div class="sub">Mục đích, không phải phương tiện</div>
+          </div>
+        </div>
+        <div class="epic-card-body">Con người là mục đích — không phải phương tiện để đạt con số. Kết quả là biểu hiện tự nhiên khi con người được phát triển đúng cách, không phải mục đích duy nhất cần theo đuổi.</div>
+      </div>
+      <div class="epic-card">
+        <div class="epic-card-hd">
+          <div class="epic-letter" style="background: var(--green);">I</div>
+          <div class="epic-card-hd-text">
+            <div class="name">Impact — Tác động thật sự</div>
+            <div class="sub">Không chỉ là output</div>
+          </div>
+        </div>
+        <div class="epic-card-body">Đi từ Output → Outcome → Impact → Legacy. Đo kết quả bằng sự thay đổi thực tế ở con người và tổ chức — không chỉ đếm số lượng đầu ra hay báo cáo được nộp đúng hạn.</div>
+      </div>
+      <div class="epic-card">
+        <div class="epic-card-hd">
+          <div class="epic-letter" style="background: var(--amber);">C</div>
+          <div class="epic-card-hd-text">
+            <div class="name">Collaboration &amp; Innovation</div>
+            <div class="sub">Cộng tác chân thật, dám thử điều mới</div>
+          </div>
+        </div>
+        <div class="epic-card-body">Hợp tác chân thật — không hợp tác cho có. Dám thử điều mới thay vì bám vào lối cũ. Phá bỏ tư duy cục bộ, chủ động kết nối liên phòng ban thay vì chỉ lo phần việc của mình.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin: 36px 0 16px;">ETC — Cách EPIC biểu hiện thành hành vi thực tế</h3>
+
+    <div class="prose">
+      <p>EPIC là giá trị bạn tin. Nhưng giá trị chỉ có nghĩa khi nó trở thành hành vi quan sát được. IPAG dùng <strong>ETC</strong> (Engagement · Trust · Collaboration) như một "kính chiếu yêu" để kiểm tra xem giá trị EPIC có đang sống thật không — hay chỉ là lời nói.</p>
+      <p>Câu hỏi không phải là <em>"bạn có thích tổ chức không?"</em> mà là <em>"hành vi cụ thể nào cho thấy bạn đang sống theo đúng các giá trị EPIC?"</em></p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0;">
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--teal); padding: 14px 16px;">
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">E · Engagement</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px;">Gắn kết</div>
+        </div>
+        <div style="padding: 14px 16px;">
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với bản thân:</strong> Hiểu ý nghĩa công việc, làm với tinh thần làm chủ và cam kết cao.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với đội nhóm:</strong> Chủ động kết nối, quan tâm và hỗ trợ đồng nghiệp.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--navy);">Với tổ chức:</strong> Cảm thấy mình là một phần của tổ chức, ứng xử nhất quán với văn hóa.</p>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--purple); padding: 14px 16px;">
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">T · Trust</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px;">Tin cậy</div>
+        </div>
+        <div style="padding: 14px 16px;">
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với bản thân:</strong> Tin vào khả năng phát triển của bản thân, sẵn sàng học hỏi và đón nhận thử thách.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với đội nhóm:</strong> Tin vào năng lực và trách nhiệm của đồng nghiệp, sẵn sàng phối hợp.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--navy);">Với tổ chức:</strong> Tin vào định hướng phát triển, chủ động đồng hành với mục tiêu chung.</p>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <div style="background: var(--green); padding: 14px 16px;">
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">C · Collaboration</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px;">Hợp tác</div>
+        </div>
+        <div style="padding: 14px 16px;">
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với bản thân:</strong> Đảm bảo nhất quán giữa lời nói, cam kết và hành động.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px;"><strong style="color:var(--navy);">Với đội nhóm:</strong> Chủ động hợp tác, chia sẻ thông tin và hỗ trợ nhau đạt mục tiêu chung.</p>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--navy);">Với tổ chức:</strong> Đặt lợi ích tổ chức lên trên lợi ích cục bộ của bộ phận hay cá nhân.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="self-q">
+      <div class="self-q-label">✏ Bạn tự hỏi</div>
+      <ul>
+        <li>Trong tuần làm việc này, hành vi nào của bạn thể hiện E, T, hoặc C?</li>
+        <li>Có điều gì bạn làm mà đi ngược lại một trong 3 chữ này không?</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PHẦN 2: 4 LA BÀN -->
+  <section id="overview" class="fade-in visible">
+    <div class="section-header">
+      <div class="section-tag">Phần 2 · IPAG Compass</div>
+      <h2 class="section-title">4 La Bàn Sự Nghiệp — Bức tranh toàn cảnh</h2>
+      <p class="section-lead">4 La Bàn là bộ công cụ định hướng mà IPAG trao cho bạn. Không phải quy trình cứng nhắc — mà là 4 câu hỏi giúp bạn tự kiểm tra mình đang đi đúng hướng không.</p>
+    </div>
+
+    <div class="prose">
+      <p>Giống như la bàn thật — nó không ép bạn đi đâu, nhưng giúp bạn biết mình đang đi đúng hướng không. Mỗi khi bắt đầu một việc mới, hoặc khi đang bị tắc và không biết vì sao, hãy kiểm tra qua 4 La Bàn này.</p>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <div class="pillar-card-top" style="background: linear-gradient(135deg, #E0F2F7, #BAE6FD);">
+          <div class="pillar-card-code" style="color: var(--teal);">D · dGO</div>
+          <div class="pillar-card-name" style="color: var(--navy);">La Bàn Hiểu Biết — Thấy đúng</div>
+        </div>
+        <div class="pillar-card-body">
+          Bạn nhìn vào bên trong: tôi đang là ai về chuyên môn? Tôi đang trưởng thành đến đâu? Tôi hiểu rõ vai trò của mình chưa?
+          <div class="pillar-card-q" style="color: var(--teal);">"Tôi thấy rõ vai trò của mình và điều tổ chức cần?"</div>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card-top" style="background: linear-gradient(135deg, var(--purple-lt), #DDD6FE);">
+          <div class="pillar-card-code" style="color: var(--purple);">C · dLINK</div>
+          <div class="pillar-card-name" style="color: var(--navy);">La Bàn Kết Nối — Thông đúng</div>
+        </div>
+        <div class="pillar-card-body">
+          Bạn nhìn ra bên ngoài: tôi cần kết nối với ai? Cần nguồn lực nào? Ai đang có thể giúp hoặc bị ảnh hưởng bởi việc tôi làm?
+          <div class="pillar-card-q" style="color: var(--purple);">"Tôi biết cần kết nối với ai và nguồn lực nào?"</div>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card-top" style="background: linear-gradient(135deg, var(--green-lt), #A7F3D0);">
+          <div class="pillar-card-code" style="color: var(--green);">S · dWORK</div>
+          <div class="pillar-card-name" style="color: var(--navy);">La Bàn Hành Động — Cộng đúng</div>
+        </div>
+        <div class="pillar-card-body">
+          Bạn nhìn vào việc đang làm: tôi có đang làm đúng phần của mình không? Không ôm quá nhiều, không bỏ sót điều quan trọng.
+          <div class="pillar-card-q" style="color: var(--green);">"Tôi đóng góp đúng vai trò và trách nhiệm được giao?"</div>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card-top" style="background: linear-gradient(135deg, var(--amber-lt), #FDE68A);">
+          <div class="pillar-card-code" style="color: var(--amber);">P · dVALUE</div>
+          <div class="pillar-card-name" style="color: var(--navy);">La Bàn Giá Trị — Kết quả đúng</div>
+        </div>
+        <div class="pillar-card-body">
+          Bạn nhìn vào đầu ra: giá trị tôi tạo ra có thật không? Nó được đo đúng và ghi nhận đúng cách chưa?
+          <div class="pillar-card-q" style="color: var(--amber);">"Tôi tạo ra giá trị thật và được ghi nhận?"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="self-q">
+      <div class="self-q-label">✏ Bạn tự hỏi</div>
+      <ul>
+        <li>Với công việc hiện tại: bạn đang thiếu ở La Bàn nào nhất?</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- dGO -->
+  <section id="dgo" class="fade-in visible">
+    <div class="laban-header" style="background: var(--teal-lt);">
+      <div class="laban-color-bar" style="background: var(--teal);"></div>
+      <div class="laban-hd-body">
+        <div class="laban-hd-tag" style="color: var(--teal);">La Bàn 1 · D · DEPTH</div>
+        <div class="laban-hd-title">dGO — La Bàn Hiểu Biết: <em>Thấy đúng</em></div>
+        <div class="laban-hd-q">"Tôi thấy rõ vai trò của mình và điều tổ chức cần?"</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>dGO là la bàn đầu tiên — và quan trọng nhất. Trước khi làm bất kỳ việc gì, bạn cần có sự rõ ràng từ bên trong: <strong>tôi là ai về mặt chuyên môn, và tôi đang trưởng thành thế nào?</strong></p>
+      <p>La Bàn dGO gồm hai phần song hành: <strong>JD Track</strong> (bản sắc nghề) và <strong>DEPTH</strong> (đo trưởng thành).</p>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 32px 0 14px; display: flex; align-items: center; gap: 8px;"><span style="background:var(--teal); color:#fff; padding:2px 10px; border-radius:4px; font-size:12px;">PHẦN 1</span> Bản sắc nghề — JD Track</h3>
+
+    <div class="prose">
+      <p>Bản sắc nghề là câu trả lời cho câu hỏi: <em>"Tôi là ai về mặt chuyên môn?"</em> Không phải chức danh trên card visit — mà là hướng nghề đang định hình bạn và vị trí của bạn trên bản đồ chuyên môn của tổ chức.</p>
+    </div>
+
+    <div style="background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 20px 0;">
+      <div style="background: var(--teal-lt); padding: 12px 18px; font-size: 12px; font-weight: 700; color: var(--teal); letter-spacing: 1px; text-transform: uppercase;">Ba lớp xác định bản sắc nghề</div>
+      <div style="padding: 6px 0;">
+        <div style="display: flex; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border); align-items: center;">
+          <div style="width: 4px; height: 40px; background: var(--teal); border-radius: 2px; flex-shrink: 0;"></div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--navy);">CT — Career Track</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">Định hướng nghề tổng thể — bạn thuộc nhánh nghề nào trong tổ chức?</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border); align-items: center;">
+          <div style="width: 4px; height: 40px; background: var(--mint); border-radius: 2px; flex-shrink: 0;"></div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--navy);">FD — Functional Domain</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">Miền chuyên môn bạn đang hoạt động — phòng ban, lĩnh vực nghề</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; padding: 12px 18px; align-items: center;">
+          <div style="width: 4px; height: 40px; background: #BAE6FD; border-radius: 2px; flex-shrink: 0;"></div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--navy);">FS — Functional Specialty</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">Chuyên môn sâu trong miền đó — kỹ năng cụ thể đang được rèn giũa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose"><p>Tổ chức có 4 nhánh nghề chính. Mỗi nhánh là một cách tạo giá trị khác nhau — nhưng đều vận hành trên cùng một bộ giá trị cốt lõi EPIC:</p></div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;">
+      <div style="background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 16px 18px;">
+        <div style="font-size: 12px; font-weight: 700; background: var(--teal); color: #fff; display: inline-block; padding: 2px 10px; border-radius: 4px; margin-bottom: 8px;">DC</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Direct Client</div>
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Tư vấn và quan hệ khách hàng dài hạn. Đứng tuyến đầu — xây dựng niềm tin, tư vấn chiến lược và làm giàu vòng đời quan hệ.</div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--purple); border-radius: 0 8px 8px 0; padding: 16px 18px;">
+        <div style="font-size: 12px; font-weight: 700; background: var(--purple); color: #fff; display: inline-block; padding: 2px 10px; border-radius: 4px; margin-bottom: 8px;">PS</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Professional Service</div>
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Deliver xuất sắc và chuyên môn kỹ thuật sâu. Làm chủ chuyên môn — biến yêu cầu thành sản phẩm/dịch vụ chất lượng cao.</div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: 0 8px 8px 0; padding: 16px 18px;">
+        <div style="font-size: 12px; font-weight: 700; background: var(--green); color: #fff; display: inline-block; padding: 2px 10px; border-radius: 4px; margin-bottom: 8px;">CG</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Capability Guardian</div>
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Giữ gìn và nuôi năng lực "sống" của tổ chức — bảo đảm vận hành minh bạch, hiệu quả, bền vững từ tài chính, pháp lý đến rủi ro.</div>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; padding: 16px 18px;">
+        <div style="font-size: 12px; font-weight: 700; background: var(--amber); color: #fff; display: inline-block; padding: 2px 10px; border-radius: 4px; margin-bottom: 8px;">BA</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Business Architecture</div>
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">Thiết kế và chuẩn hóa hệ thống vận hành — kết nối chiến lược, quy trình, dữ liệu và công nghệ thành năng lực ra quyết định.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 36px 0 14px; display: flex; align-items: center; gap: 8px;"><span style="background:var(--teal); color:#fff; padding:2px 10px; border-radius:4px; font-size:12px;">PHẦN 2</span> Đo trưởng thành — DEPTH</h3>
+
+    <div class="prose">
+      <p>DEPTH đo một điều đơn giản nhưng sâu sắc: <strong>bạn có đang thật sự sống theo những gì bạn tin không?</strong> Không phải đo kiến thức, không phải đo bằng cấp — mà đo sự nhất quán giữa nội lực bên trong và hành động quan sát được bên ngoài.</p>
+      <p>IPAG dùng khái niệm <strong>Ngũ lực – Ngũ hành</strong>: 5 cặp nội lực và hành động tương ứng. Mỗi cặp là một mặt của độ "chín" con người.</p>
+    </div>
+
+    <table class="depth-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nội lực</th>
+          <th>Hành động</th>
+          <th>Ý nghĩa trong công việc</th>
+          <th>Dấu hiệu thiếu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-teal">1</span></td>
+          <td><strong>TÍN</strong><br><span style="font-size:12px; color:var(--muted);">Niềm tin gốc</span></td>
+          <td><strong>KHỞI</strong><br><span style="font-size:12px; color:var(--muted);">Dám bắt đầu</span></td>
+          <td>Tôi tin điều này → nên tôi dám bắt đầu</td>
+          <td><span class="badge badge-red">Hay trì hoãn, nói nhiều hơn làm</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-teal">2</span></td>
+          <td><strong>TẤN</strong><br><span style="font-size:12px; color:var(--muted);">Kiên trì dấn thân</span></td>
+          <td><strong>HÀNH</strong><br><span style="font-size:12px; color:var(--muted);">Làm thật không bỏ cuộc</span></td>
+          <td>Tôi kiên trì dấn thân → nên tôi làm thật đến cùng</td>
+          <td><span class="badge badge-red">Bắt đầu nhiều, hoàn thành ít</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-teal">3</span></td>
+          <td><strong>NIỆM</strong><br><span style="font-size:12px; color:var(--muted);">Hiện diện trọn vẹn</span></td>
+          <td><strong>CHUYÊN</strong><br><span style="font-size:12px; color:var(--muted);">Chuyên nhất</span></td>
+          <td>Tôi thực sự có mặt → nên tôi làm chuyên nhất 1 việc tại một thời điểm</td>
+          <td><span class="badge badge-red">Dễ phân tán, làm nhiều việc cùng lúc</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-teal">4</span></td>
+          <td><strong>ĐỊNH</strong><br><span style="font-size:12px; color:var(--muted);">Tập trung bền vững</span></td>
+          <td><strong>TINH</strong><br><span style="font-size:12px; color:var(--muted);">Tinh xảo, tinh tế</span></td>
+          <td>Tôi có sự tập trung bền vững → nên tôi làm ra kết quả chất lượng cao và ổn định</td>
+          <td><span class="badge badge-red">Kết quả thấp, không ổn định</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-teal">5</span></td>
+          <td><strong>TUỆ</strong><br><span style="font-size:12px; color:var(--muted);">Phân biệt sáng suốt</span></td>
+          <td><strong>THÔNG</strong><br><span style="font-size:12px; color:var(--muted);">Thấu suốt mọi việc</span></td>
+          <td>Tôi phân biệt được việc gì thật sự quan trọng → nên tôi thấy sáng tỏ mọi chuyện</td>
+          <td><span class="badge badge-red">Vấn đề lặp lại, không giải quyết được gốc rễ</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      5 cặp này không thể tách rời. Đây là thước đo độ "chín" của một con người: bạn có đang thật sự sống theo những gì bạn tin không, và nhất quán đến mức nào?
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 32px 0 14px;">BMI &amp; ICM — Hai thước đo song hành</h3>
+
+    <div class="bmi-box">
+      <div class="bmi-card">
+        <div class="bmi-hd" style="background: #EEF2FF;">
+          <div class="bmi-hd-left">
+            <div class="btitle">BMI</div>
+            <div class="bsub">Behavioral Maturity Indicator</div>
+          </div>
+          <div class="bmi-hd-tag" style="background: var(--navy); color: #fff;">Bạn LÀ AI</div>
+        </div>
+        <div class="bmi-body">
+          <div class="bmi-formula">BMI = PoA (50%) + EB (50%)</div>
+          <div class="bmi-item">
+            <div class="bikey">PoA — Pattern of Action</div>
+            <div class="biname">Sống nếp</div>
+            <div class="bidesc">Kỷ luật thực hành 4 la bàn trong công việc hàng ngày.</div>
+          </div>
+          <div class="bmi-item">
+            <div class="bikey">EB — Expected Behavior</div>
+            <div class="biname">Sống nền</div>
+            <div class="bidesc">Mức độ biểu hiện chuẩn mức EPIC thành hành vi ETC (Gắn kết – Tin cậy – Hợp tác).</div>
+          </div>
+        </div>
+      </div>
+      <div class="bmi-card">
+        <div class="bmi-hd" style="background: var(--teal-lt);">
+          <div class="bmi-hd-left">
+            <div class="btitle">ICM</div>
+            <div class="bsub">Individual Competence Maturity</div>
+          </div>
+          <div class="bmi-hd-tag" style="background: var(--teal); color: #fff;">Bạn LÀM ĐƯỢC GÌ</div>
+        </div>
+        <div class="bmi-body">
+          <div class="bmi-formula">ICM = SC + DC</div>
+          <div class="bmi-item">
+            <div class="bikey">SC — Skill Competence</div>
+            <div class="biname">Năng lực thực thi đơn lẻ</div>
+            <div class="bidesc">Common Skills (Digital · Behavior · Leadership) và Technical Skills chuyên ngành.</div>
+          </div>
+          <div class="bmi-item">
+            <div class="bikey">DC — Delivery Competence</div>
+            <div class="biname">Năng lực đảm trách toàn trình</div>
+            <div class="bidesc">Đưa công việc đến kết quả cuối cùng — không chỉ làm phần của mình.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose"><p>BMI được đo theo thang <strong>5 cấp độ D-Rank</strong>. Không nhảy cóc — phải đi qua từng nấc thang mới đạt được sự thông tuệ thật sự:</p></div>
+
+    <div class="rank-steps">
+      <div class="rank-step" style="background: #E2E8F0; color: var(--navy);">
+        <div class="num">D1</div><div class="lbl">Nhận diện</div>
+      </div>
+      <div class="rank-step" style="background: #BAE6FD; color: var(--navy);">
+        <div class="num">D2</div><div class="lbl">Thực hành</div>
+      </div>
+      <div class="rank-step" style="background: #7DD3FC; color: var(--navy);">
+        <div class="num">D3</div><div class="lbl">Nhất quán</div>
+      </div>
+      <div class="rank-step" style="background: #0EA5E9; color: #fff;">
+        <div class="num">D4</div><div class="lbl">Bền vững</div>
+      </div>
+      <div class="rank-step" style="background: var(--navy); color: #fff;">
+        <div class="num">D5</div><div class="lbl">Lan tỏa</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- dLINK -->
+  <section id="dlink" class="fade-in visible">
+    <div class="laban-header" style="background: var(--purple-lt);">
+      <div class="laban-color-bar" style="background: var(--purple);"></div>
+      <div class="laban-hd-body">
+        <div class="laban-hd-tag" style="color: var(--purple);">La Bàn 2 · C · CONNECTION</div>
+        <div class="laban-hd-title">dLINK — La Bàn Kết Nối: <em>Thông đúng</em></div>
+        <div class="laban-hd-q">"Tôi biết cần kết nối với ai và nguồn lực nào?"</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>dLINK là la bàn giúp bạn biết mình không đơn độc — và quan trọng hơn, biết <strong>kết nối đúng người, đúng thời điểm, đúng phạm vi.</strong> Làm việc mà không kết nối đúng là lãng phí công sức và dễ tạo ra kết quả sai.</p>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 28px 0 14px;">4 Phạm vi kết nối — Từ cá nhân lan toả ra hệ sinh thái</h3>
+
+    <div class="prose"><p>Mỗi người hoạt động trong 4 vòng phạm vi đồng tâm. Hiểu rõ bạn đang ở vòng nào với việc nào giúp bạn biết cần làm gì và cần ai:</p></div>
+
+    <div class="scope-stack">
+      <div class="scope-row">
+        <div class="scope-tag" style="background: #7C3AED;">SOA</div>
+        <div class="scope-label-col">
+          <div class="scope-name">Tự lực</div>
+          <div class="scope-sub">Phạm vi 01</div>
+        </div>
+        <div class="scope-desc"><strong style="color:var(--navy); margin-right:6px;">Span of Accountability —</strong> Các nhiệm vụ bạn chịu trách nhiệm hoàn toàn. Bạn quyết định cách làm, chịu trách nhiệm về kết quả và phối hợp với ai để hoàn thành.</div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-tag" style="background: #A78BFA;">SOI</div>
+        <div class="scope-label-col">
+          <div class="scope-name">Công lực</div>
+          <div class="scope-sub">Phạm vi 02</div>
+        </div>
+        <div class="scope-desc"><strong style="color:var(--navy); margin-right:6px;">Span of Influence —</strong> Nguồn lực có ảnh hưởng hoặc liên quan đến phạm vi công việc của bạn — những người bạn cần thông báo, thuyết phục hoặc phối hợp.</div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-tag" style="background: #C4B5FD; color: #5B21B6;">SOC</div>
+        <div class="scope-label-col">
+          <div class="scope-name">Hợp lực</div>
+          <div class="scope-sub">Phạm vi 03</div>
+        </div>
+        <div class="scope-desc"><strong style="color:var(--navy); margin-right:6px;">Span of Control —</strong> Nguồn lực trong phạm vi kiểm soát trực tiếp, bao gồm Working Team của bạn.</div>
+      </div>
+      <div class="scope-row">
+        <div class="scope-tag" style="background: #EDE9FE; color: var(--purple);">SOS</div>
+        <div class="scope-label-col">
+          <div class="scope-name">Trợ lực</div>
+          <div class="scope-sub">Phạm vi 04</div>
+        </div>
+        <div class="scope-desc"><strong style="color:var(--navy); margin-right:6px;">Span of Support —</strong> Mạng lưới nhân sự hỗ trợ rộng hơn — những người sẵn sàng hỗ trợ khi cần.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 36px 0 14px;">Người đồng hành của bạn — Companion Map</h3>
+
+    <div class="prose"><p>Tại IPAG, bạn không bao giờ chỉ có một người chăm sóc. Hệ thống đồng hành được thiết kế theo hai trục riêng biệt:</p></div>
+
+    <div class="companion-grid">
+      <div class="companion-group">
+        <div class="companion-group-hd" style="background: var(--teal-lt); color: var(--teal);">🧭 Đồng hành phát triển cá nhân (La Bàn dGO · Nghề)</div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--teal);">Buddy</div>
+          <div class="companion-text">
+            <div class="ctitle">IPAG Buddy</div>
+            <div class="cdesc">Đồng nghiệp cùng hoặc gần cấp bậc, cùng chuyên môn — bạn đồng hành ngang, cùng học cùng phát triển.</div>
+          </div>
+        </div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--navy);">SM</div>
+          <div class="companion-text">
+            <div class="ctitle">Servant Manager</div>
+            <div class="cdesc">Người quản lý trực tiếp trong trục iLEAD — <strong>chịu trách nhiệm phát triển bạn</strong> về con người, không chỉ giao việc.</div>
+          </div>
+        </div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--purple);">EP</div>
+          <div class="companion-text">
+            <div class="ctitle">Epic Partner</div>
+            <div class="cdesc">Đại diện bộ phận nhân sự — cầu nối giữa bạn và HR, lắng nghe và hỗ trợ các vấn đề nhân sự.</div>
+          </div>
+        </div>
+      </div>
+      <div class="companion-group">
+        <div class="companion-group-hd" style="background: var(--green-lt); color: var(--green);">⚙ Đồng hành phát triển công việc (La Bàn dWORK · Việc)</div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--green);">FCM</div>
+          <div class="companion-text">
+            <div class="ctitle">FCM / OCM</div>
+            <div class="cdesc">FC Manager &amp; OC Manager — người giao và dẫn việc: công việc &amp; phạm vi nhiệm vụ trong trục dWORK.</div>
+          </div>
+        </div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--amber);">FCH</div>
+          <div class="companion-text">
+            <div class="ctitle">FC Head</div>
+            <div class="cdesc">Lãnh đạo toàn bộ FC ở cấp Đơn vị kinh doanh — thành viên Ban Điều hành.</div>
+          </div>
+        </div>
+        <div class="companion-item">
+          <div class="companion-badge" style="background: var(--slate);">CS</div>
+          <div class="companion-text">
+            <div class="ctitle">Cộng sự</div>
+            <div class="cdesc">Những người cộng tác trong phạm vi SOI · SOC · SOS của bạn.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight purple">
+      <strong>💡 Nhớ quan trọng:</strong> SM chăm bạn "<strong>LÀ AI</strong>" — phát triển con người, DEPTH, BMI. FCM/OCM chăm bạn "<strong>LÀM GÌ</strong>" — phạm vi việc, KPI, OKR. Hai vai trò hoàn toàn khác trục, <em>không thay thế nhau.</em>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 700; color: var(--navy); margin: 36px 0 14px;">14 Chuẩn mực ứng xử (Code of Conduct) tại IPAG</h3>
+    <div class="prose"><p>Bên cạnh kết nối con người, dLINK còn yêu cầu bạn kết nối với các chuẩn mực hành vi của tổ chức. 14 chuẩn mực chia thành 3 nhóm rèn luyện:</p></div>
+
+    <div class="coc-grid">
+      <div class="coc-group-tag">🧘 Luyện Tâm (01–07) — Nội tâm &amp; thái độ</div>
+      <div class="coc-item"><div class="coc-num">01</div><div class="coc-txt">Thái độ cởi mở</div></div>
+      <div class="coc-item"><div class="coc-num">02</div><div class="coc-txt">Phá bỏ cố chấp</div></div>
+      <div class="coc-item"><div class="coc-num">03</div><div class="coc-txt">Tôn trọng tự do tư duy</div></div>
+      <div class="coc-item"><div class="coc-num">04</div><div class="coc-txt">Nhìn thẳng vào khó khăn</div></div>
+      <div class="coc-item"><div class="coc-num">05</div><div class="coc-txt">Nếp sống lành mạnh</div></div>
+      <div class="coc-item"><div class="coc-num">06</div><div class="coc-txt">Làm chủ cảm xúc</div></div>
+      <div class="coc-item"><div class="coc-num">07</div><div class="coc-txt">Hiện diện trọn vẹn</div></div>
+      <div class="coc-group-tag">🎯 Luyện Tầm (08–11) — Giao tiếp &amp; tư duy</div>
+      <div class="coc-item"><div class="coc-num">08</div><div class="coc-txt">Lắng nghe sâu</div></div>
+      <div class="coc-item"><div class="coc-num">09</div><div class="coc-txt">Ngôn ngữ chân thật</div></div>
+      <div class="coc-item"><div class="coc-num">10</div><div class="coc-txt">Văn hoá trách nhiệm</div></div>
+      <div class="coc-item"><div class="coc-num">11</div><div class="coc-txt">Bảo vệ tổ chức</div></div>
+      <div class="coc-group-tag">🧠 Luyện Trí (12–14) — Hành động &amp; cam kết</div>
+      <div class="coc-item"><div class="coc-num">12</div><div class="coc-txt">Làm việc có lương tâm</div></div>
+      <div class="coc-item"><div class="coc-num">13</div><div class="coc-txt">Tôn trọng và chia sẻ</div></div>
+      <div class="coc-item"><div class="coc-num">14</div><div class="coc-txt">Cam kết đích thực</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- dWORK -->
+  <section id="dwork" class="fade-in visible">
+    <div class="laban-header" style="background: var(--green-lt);">
+      <div class="laban-color-bar" style="background: var(--green);"></div>
+      <div class="laban-hd-body">
+        <div class="laban-hd-tag" style="color: var(--green);">La Bàn 3 · S · SPAN</div>
+        <div class="laban-hd-title">dWORK — La Bàn Hành Động: <em>Cộng đúng</em></div>
+        <div class="laban-hd-q">"Tôi đóng góp đúng vai trò và trách nhiệm được giao?"</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>dWORK là la bàn của hành động — nơi mọi thứ trở thành kết quả thực tế. La bàn này hỏi một câu đơn giản nhưng đòi hỏi sự rõ ràng liên tục: <strong>tôi đang làm đúng phần của mình chưa?</strong> Không ôm quá nhiều, không bỏ sót điều quan trọng.</p>
+      <p>Tại IPAG, công việc được tổ chức theo hai luồng song song:</p>
+    </div>
+
+    <div class="flow-grid">
+      <div class="flow-card">
+        <div class="flow-card-hd" style="background: var(--green-lt); color: var(--green);">⚙ Luồng 01 · FC — Functional Chain<br><span style="font-size:11px; font-weight:500; color:var(--muted);">Công việc thường xuyên / BAU</span></div>
+        <div class="flow-card-body">
+          <div class="flow-item">
+            <div class="flow-icon" style="background: #BBF7D0; color: var(--green);">OD</div>
+            <div class="flow-text">
+              <div class="ftitle">Operation Dot — Điểm vận hành</div>
+              <div class="fdesc">Đơn vị công việc nhỏ nhất. Mỗi OD có đầu vào rõ → cách xử lý rõ → kết quả đầu ra rõ. 1 OD · 1 A. Tích lũy nhiều OD tạo thành SOA của bạn.</div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--muted); padding: 4px 0 4px 48px; font-style: italic;">OD + OD + ... = OM</div>
+          <div class="flow-item">
+            <div class="flow-icon" style="background: #6EE7B7; color: #065F46;">OM</div>
+            <div class="flow-text">
+              <div class="ftitle">Operation Module — Mô-đun vận hành</div>
+              <div class="fdesc">Nhiều OD phối hợp tạo ra một khối vận hành hoàn chỉnh. Ai làm gì được phân công rõ ràng — không chồng chéo, không bỏ sót.</div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--muted); padding: 4px 0 4px 48px; font-style: italic;">OM + OM + ... = FC</div>
+          <div class="flow-item">
+            <div class="flow-icon" style="background: var(--green);">FC</div>
+            <div class="flow-text">
+              <div class="ftitle">Functional Chain — Chuỗi chức năng</div>
+              <div class="fdesc">Chuỗi vận hành đầu cuối từ nhiều OM — tạo ra giá trị thực đến khách hàng. Đo bằng KPI.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-card-hd" style="background: #D1FAE5; color: #065F46;">🚀 Luồng 02 · OC — Opportunity Chain<br><span style="font-size:11px; font-weight:500; color:var(--muted);">Dự án / Cơ hội — có end-date</span></div>
+        <div class="flow-card-body">
+          <div class="flow-item">
+            <div class="flow-icon" style="background: #BBF7D0; color: var(--green); font-size:11px; text-align:center;">OC 01</div>
+            <div class="flow-text">
+              <div class="ftitle">Fix / Build — Bạn tự đề xuất</div>
+              <div class="fdesc">Bạn thấy điều gì có thể làm tốt hơn trong công việc hằng ngày → đề xuất và dẫn dắt.</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-icon" style="background: #6EE7B7; color: #065F46; font-size:11px; text-align:center;">OC 02</div>
+            <div class="flow-text">
+              <div class="ftitle">Transform — Ban lãnh đạo khởi động</div>
+              <div class="fdesc">Thay đổi lớn ở tầng hệ thống. Bạn được chọn tham gia — hoặc chủ động đăng ký.</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-icon" style="background: var(--green); font-size:11px; text-align:center;">OC 03</div>
+            <div class="flow-text">
+              <div class="ftitle">Innovation — Khám phá điều mới</div>
+              <div class="fdesc">Thử nghiệm hướng kinh doanh chưa có — dành cho người dám nghĩ khác. Insight luôn có giá trị dù kết quả là gì.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight gold">
+      <strong>⚠ Nguyên tắc bất di bất dịch:</strong> FC là bắt buộc và phải ổn định trước. FC phải ổn định trước khi bạn mở OC — không có nền tảng vận hành, không thể tham gia dự án. Đây không phải hạn chế, mà là điều kiện để bạn tham gia có chất lượng.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- dVALUE -->
+  <section id="dvalue" class="fade-in visible">
+    <div class="laban-header" style="background: var(--amber-lt);">
+      <div class="laban-color-bar" style="background: var(--amber);"></div>
+      <div class="laban-hd-body">
+        <div class="laban-hd-tag" style="color: var(--amber);">La Bàn 4 · P · PERFORMANCE</div>
+        <div class="laban-hd-title">dVALUE — La Bàn Giá Trị: <em>Kết quả đúng</em></div>
+        <div class="laban-hd-q">"Tôi tạo ra giá trị thật và được ghi nhận?"</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>dVALUE là la bàn cuối cùng — nhưng không phải ít quan trọng nhất. Đây là nơi bạn nhìn lại và trả lời: <strong>giá trị tôi tạo ra có thật không, và nó được ghi nhận đúng cách chưa?</strong></p>
+      <p>La bàn này vận hành qua <strong>Tháp sự nghiệp HWG</strong> — ba tầng phản ánh toàn bộ hành trình của bạn tại tổ chức.</p>
+    </div>
+
+    <div class="hwg-tower">
+      <div class="hwg-row" style="border-bottom: 1px solid var(--border);">
+        <div class="hwg-badge" style="background: var(--amber);">3<br>G</div>
+        <div class="hwg-content">
+          <div class="htitle" style="color: var(--amber);">Tầng 3 · GROW — "Tôi đang tạo ra gì?"</div>
+          <div class="hq">Performance</div>
+          <div class="hdesc">Biểu hiện mức độ trưởng thành toàn diện về <strong>Tâm – Tầm – Trí</strong>, kết tinh thành giá trị bạn để lại cho tổ chức. Đây là tầng cao nhất — chỉ đến được khi Tầng 1 và Tầng 2 đã vững.</div>
+        </div>
+        <div class="hwg-metric">
+          <span style="background: var(--amber-lt); color: #78350F;">KPI · OKR<br>BMI · ICM</span>
+        </div>
+      </div>
+      <div class="hwg-row" style="border-bottom: 1px solid var(--border);">
+        <div class="hwg-badge" style="background: #059669;">2<br>W</div>
+        <div class="hwg-content">
+          <div class="htitle" style="color: var(--green);">Tầng 2 · WEALTH — "Tôi đang ở đâu?"</div>
+          <div class="hq">Position</div>
+          <div class="hdesc">Phản ánh phạm vi và vị trí công việc bạn đảm trách hiện tại — bạn đang <strong>lắp vào đâu trong chuỗi giá trị</strong> của tổ chức. Bao gồm: vai trò, SOA, FC seat, OC seat.</div>
+        </div>
+        <div class="hwg-metric">
+          <span style="background: var(--green-lt); color: #065F46;">Vai trò · SOA<br>FC seat · OC seat</span>
+        </div>
+      </div>
+      <div class="hwg-row">
+        <div class="hwg-badge" style="background: var(--teal);">1<br>H</div>
+        <div class="hwg-content">
+          <div class="htitle" style="color: var(--teal);">Tầng 1 · HEALTH — "Tôi là ai?"</div>
+          <div class="hq">Person</div>
+          <div class="hdesc">Phản ánh bạn là ai trong tổ chức và bạn đang <strong>phát triển như thế nào về DEPTH</strong>. Đây là tầng nền — tất cả các tầng trên đều dựa vào sự vững chắc của tầng này. Thể hiện qua: Sống nền · Sống nếp.</div>
+        </div>
+        <div class="hwg-metric">
+          <span style="background: var(--teal-lt); color: #0E7490;">DEPTH · BMI<br>Sống nền · Nếp</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight gold">
+      Tháp HWG không phải thứ tự ưu tiên từ trên xuống — mà là thứ tự xây dựng từ dưới lên. Phải có Health trước, mới tích lũy được Wealth, mới tạo ra được Grow bền vững.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- VÒNG LẶP -->
+  <section id="loop" class="fade-in visible">
+    <div class="section-header">
+      <div class="section-tag">Vận hành · Compass Loop</div>
+      <h2 class="section-title">Vòng lặp 4 La Bàn — Tại sao phải theo thứ tự?</h2>
+      <p class="section-lead">Đây là câu hỏi nhiều người hay hỏi: tôi có thể bỏ qua bước D hoặc C không, nhảy thẳng vào P được không? Câu trả lời ngắn: không bền.</p>
+    </div>
+
+    <div class="prose">
+      <p>Nhiều người muốn nhảy thẳng đến La Bàn P (kết quả) mà bỏ qua D, C, S. Nhưng <strong>kết quả không bền khi gốc rễ (D) chưa chín, kết nối (C) chưa đúng, phạm vi (S) chưa rõ.</strong> Bạn có thể đạt được kết quả tạm thời — nhưng nó sẽ không đứng vững.</p>
+    </div>
+
+    <div class="loop-steps">
+      <div class="loop-step">
+        <div class="loop-num" style="background: var(--teal);">1</div>
+        <div class="loop-body">
+          <div class="ltitle">D · Thấy đúng — Chuẩn bị bản thân</div>
+          <div class="lq">"Trước khi làm bất kỳ việc gì — hỏi: 'Mình có thật sự hiểu tại sao làm điều này không?'"</div>
+          <div class="ldesc">Không phải hiểu chung chung. Mà là hiểu rõ: vai trò của mình trong việc này là gì? Tổ chức cần gì? Mình đang ở D-rank nào? Có đủ năng lực không? Nếu chưa rõ — dừng lại và làm rõ trước khi tiến.</div>
+          <span class="loop-gate" style="background: var(--teal-lt); color: var(--teal);">Phải đủ rõ → mới qua</span>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-num" style="background: var(--purple);">2</div>
+        <div class="loop-body">
+          <div class="ltitle">C · Thông đúng — Kết nối đúng người</div>
+          <div class="lq">"Đừng làm một mình khi bạn đang thiếu thông tin hoặc cần phối hợp."</div>
+          <div class="ldesc">Sau khi đã thấy đúng — kiểm tra: mình có đang kết nối đúng chưa? Ai cần được thông báo? Ai cần phối hợp? Có nguồn lực nào mình chưa khai thác? Làm một mình khi cần phối hợp là lãng phí và tạo mù thông tin.</div>
+          <span class="loop-gate" style="background: var(--purple-lt); color: var(--purple);">Đủ kết nối → mới qua</span>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-num" style="background: var(--green);">3</div>
+        <div class="loop-body">
+          <div class="ltitle">S · Cộng đúng — Làm đúng việc của mình</div>
+          <div class="lq">"Không ôm quá nhiều — không bỏ sót phần quan trọng."</div>
+          <div class="ldesc">Đã thấy đúng, đã thông đúng — giờ là lúc làm. Câu hỏi ở đây: tôi đang làm đúng phạm vi SOA của mình không? Không ôm việc của người khác, không để lọt việc của mình. Mỗi OD trong FC phải được hoàn thành đúng chuẩn.</div>
+          <span class="loop-gate" style="background: var(--green-lt); color: var(--green);">Hoàn thành scope → mới qua</span>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-num" style="background: var(--amber);">4</div>
+        <div class="loop-body">
+          <div class="ltitle">P · Kết quả đúng — Ghi nhận giá trị</div>
+          <div class="lq">"Kết quả không tự nói lên chính nó — cần được ghi lại và ghi nhận đúng cách."</div>
+          <div class="ldesc">Kết quả tốt mà không được đo và ghi nhận đúng thì vẫn vô hình. La bàn P nhắc bạn: hãy chủ động ghi lại giá trị mình tạo ra, đo bằng KPI hoặc OKR phù hợp, và đảm bảo tổ chức thấy được đóng góp của bạn.</div>
+          <span class="loop-gate" style="background: var(--amber-lt); color: var(--amber);">Tạo giá trị + ghi nhận</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 40px;">
+      <div class="callout-label">Câu hỏi tự kiểm tra — dành cho bạn ngay hôm nay</div>
+      <p>Với công việc hiện tại tại IPAG — <strong>bạn đang thiếu ở La Bàn nào nhất?</strong> Hãy trả lời thật, không phải câu trả lời đẹp. Đó là điểm bắt đầu của hành trình trưởng thành tại IPAG.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>IPAG Compass</strong> <br>
+    <span style="font-size: 12px; margin-top: 6px; display: block;">dGO · dLINK · dWORK · dVALUE — Bốn la bàn soi đường cho hành trình trưởng thành tại IPAG</span>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  // Active nav
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navItems.forEach(n => {
+      n.classList.remove('active');
+      if (n.getAttribute('href') === '#' + current) n.classList.add('active');
+    });
+  });
+
+  // Fade in on scroll
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  faders.forEach(f => observer.observe(f));
+</script>
+
+
+</body></html>
